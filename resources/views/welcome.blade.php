@@ -6,7 +6,7 @@
       <h1 class="text-4xl font-extrabold">Welcome to Reflekt</h1>
       <p class="text-gray-400 text-lg">
         Your private space to capture thoughts, reflect, and grow.
-        Simple. Secure.
+        Simple. Secure. Beautiful.
       </p>
       <div class="flex justify-center gap-4">
         <a
