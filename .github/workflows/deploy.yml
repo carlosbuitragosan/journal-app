@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
       # Deploy Laravel app to public_html/journal-app/
       - name: Deploy journal-app (Laravel)
         uses: carlosbuitragosan/ftp-deploy-action@master
