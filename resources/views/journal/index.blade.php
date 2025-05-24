@@ -58,12 +58,10 @@
         openModal: null,
         editModalId: null,
         editForm: { title: '', body: '' },
+        init() {
+          this.editModalId = null
+        },
       }"
-      x-init="
-        openModal = null
-        editModalId = null
-        editForm = { title: '', body: '' }
-      "
       class="space-y-6"
     >
       @forelse ($entries as $entry)
@@ -151,8 +149,9 @@
       <!-- Edit Entry Modal -->
       <div
         x-show="editModalId"
-        class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+        x-transition
         x-cloak
+        class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
       >
         <div
           class="bg-white dark:bg-gray-800 p-6 rounded shadow-lg max-w-lg w-full"
