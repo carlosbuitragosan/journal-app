@@ -59,6 +59,11 @@
         editModalId: null,
         editForm: { title: '', body: '' },
       }"
+      x-init="
+        openModal = null
+        editModalId = null
+        editForm = { title: '', body: '' }
+      "
       class="space-y-6"
     >
       @forelse ($entries as $entry)
