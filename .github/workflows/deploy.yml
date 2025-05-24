@@ -23,6 +23,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: public/build/
           server-dir: build/
+          state-name: vite-build
 
       # Step 2: Upload other public/ files (excluding build/)
       - name: Upload Laravel public files
@@ -35,6 +36,8 @@ jobs:
           server-dir: ./
           exclude: |
             build/
+            .htaccess
+          state-name: public-files
 
       # Step 3: Upload Laravel core app (excluding public, vendor, node_modules, etc.)
       - name: Upload Laravel backend files
