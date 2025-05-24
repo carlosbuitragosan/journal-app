@@ -37,6 +37,7 @@ jobs:
           exclude: |
             build/
             .htaccess
+            index.php
           state-name: public-files
 
       # Step 3: Upload Laravel core app (excluding public, vendor, node_modules, etc.)

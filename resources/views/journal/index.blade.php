@@ -7,7 +7,11 @@
 
   <div class="p-6 text-gray-200 space-y-6">
     <!-- Entry Form -->
-    <form method="POST" action="/journal" class="space-y-4 mb-6">
+    <form
+      method="POST"
+      action="{{ url('/journal') }}"
+      class="space-y-4 mb-6"
+    >
       @csrf
       <div>
         <label
