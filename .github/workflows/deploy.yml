@@ -13,8 +13,31 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-      # Deploy Laravel app to public_html/journal-app/
-      - name: Deploy journal-app (Laravel)
+
+      # Step 1: Upload frontend assets (build/)
+      - name: Upload Vite build assets
+        uses: carlosbuitragosan/ftp-deploy-action@master
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: public/build
+          server-dir: public/build
+
+      # Step 2: Upload other public/ files (excluding build/)
+      - name: Upload Laravel public files
+        uses: carlosbuitragosan/ftp-deploy-action@master
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: public
+          server-dir: ./
+          exclude: |
+            build/
+
+      # Step 3: Upload Laravel core app (excluding public, vendor, node_modules, etc.)
+      - name: Upload Laravel backend files
         uses: carlosbuitragosan/ftp-deploy-action@master
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -30,9 +53,10 @@ jobs:
             tests/
             .env
             .env.example
-            .prettierrc*
-            .php-cs-fixer.*
+            public/
             package*.json
             vite.config.js
             tailwind.config.js
             postcss.config.js
+            .prettierrc*
+            .php-cs-fixer.*
