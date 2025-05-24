@@ -22,7 +22,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: public/build/
-          server-dir: public/build/
+          server-dir: build/
 
       # Step 2: Upload other public/ files (excluding build/)
       - name: Upload Laravel public files
