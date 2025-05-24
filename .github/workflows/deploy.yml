@@ -1,0 +1,36 @@
+name: Deploy Reflekt App to Hostinger
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ftp-deploy:
+    name: Upload via FTP
+    runs-on: ubuntu-latest
+
+    steps:
+      # Deploy Laravel app to public_html/journal-app/
+      - name: Deploy journal-app (Laravel)
+        uses: carlosbuitragosan/ftp-deploy-action@master
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          server-dir: reflekt/
+          exclude: |
+            .git*
+            .github/
+            node_modules/
+            vendor/
+            tests/
+            .env
+            .env.example
+            .prettierrc*
+            .php-cs-fixer.*
+            package*.json
+            vite.config.js
+            tailwind.config.js
+            postcss.config.js
