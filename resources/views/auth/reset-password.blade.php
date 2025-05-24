@@ -1,9 +1,13 @@
 <x-guest-layout>
-  <form method="POST" action="{{ route('password.store') }}">
+  <form method="POST" action="{{ url('/reset-password') }}">
     @csrf
 
     <!-- Password Reset Token -->
-    <input type="hidden" name="token" value="{{ $request->route('token') }}" />
+    <input
+      type="hidden"
+      name="token"
+      value="{{ $request->route('token') }}"
+    />
 
     <!-- Email Address -->
     <div>
@@ -18,7 +22,10 @@
         autofocus
         autocomplete="username"
       />
-      <x-input-error :messages="$errors->get('email')" class="mt-2" />
+      <x-input-error
+        :messages="$errors->get('email')"
+        class="mt-2"
+      />
     </div>
 
     <!-- Password -->
@@ -32,12 +39,18 @@
         required
         autocomplete="new-password"
       />
-      <x-input-error :messages="$errors->get('password')" class="mt-2" />
+      <x-input-error
+        :messages="$errors->get('password')"
+        class="mt-2"
+      />
     </div>
 
     <!-- Confirm Password -->
     <div class="mt-4">
-      <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+      <x-input-label
+        for="password_confirmation"
+        :value="__('Confirm Password')"
+      />
 
       <x-text-input
         id="password_confirmation"
@@ -48,7 +61,10 @@
         autocomplete="new-password"
       />
 
-      <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+      <x-input-error
+        :messages="$errors->get('password_confirmation')"
+        class="mt-2"
+      />
     </div>
 
     <div class="flex items-center justify-end mt-4">

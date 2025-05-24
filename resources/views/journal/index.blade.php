@@ -86,7 +86,7 @@
                 editModalId = {{ $entry->id }};
                 editForm.title = '{{ addslashes($entry->title) }}';
                 editForm.body = '{{ addslashes($entry->body) }}'
-                "
+              "
               class="text-sm text-blue-400 hover:underline"
             >
               Edit
@@ -124,7 +124,7 @@
                 </button>
                 <form
                   method="POST"
-                  action="/journal/{{ $entry->id }}"
+                  action="{{ url('/journal/' . $entry->id) }}"
                 >
                   @csrf
                   @method('DELETE')
@@ -143,7 +143,7 @@
         <p class="text-gray-400">You have no journal entries yet.</p>
       @endforelse
 
-      {{-- edit entry modal --}}
+      <!-- Edit Entry Modal -->
       <div
         x-show="editModalId"
         class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
@@ -158,7 +158,7 @@
             Edit Entry
           </h2>
           <form
-            :action="`/journal/${editModalId}`"
+            :action="`{{ url('/journal') }}/${editModalId}`"
             method="POST"
             class="space-y-4"
           >

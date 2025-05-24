@@ -6,7 +6,7 @@
   <!-- Session Status -->
   <x-auth-session-status class="mb-4" :status="session('status')" />
 
-  <form method="POST" action="{{ route('password.email') }}">
+  <form method="POST" action="{{ url('/forgot-password') }}">
     @csrf
 
     <!-- Email Address -->
@@ -21,7 +21,10 @@
         required
         autofocus
       />
-      <x-input-error :messages="$errors->get('email')" class="mt-2" />
+      <x-input-error
+        :messages="$errors->get('email')"
+        class="mt-2"
+      />
     </div>
 
     <div class="flex items-center justify-end mt-4">

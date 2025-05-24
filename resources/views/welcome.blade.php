@@ -10,13 +10,13 @@
       </p>
       <div class="flex justify-center gap-4">
         <a
-          href="{{ route('login') }}"
+          href="{{ url('/login') }}"
           class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-semibold"
         >
           Log in
         </a>
         <a
-          href="{{ route('register') }}"
+          href="{{ url('/register') }}"
           class="px-6 py-2 border border-indigo-600 hover:bg-indigo-600 hover:text-white rounded text-indigo-400 font-semibold"
         >
           Register

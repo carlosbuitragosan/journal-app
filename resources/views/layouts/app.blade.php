@@ -8,12 +8,14 @@
     />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Reflekt') }}</title>
+
     <link
       rel="icon"
-      href="{{ asset('favicon.png') }}"
+      href="{{ url('favicon.png') }}"
       type="image/png"
     />
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net" />
     <link
@@ -21,7 +23,7 @@
       rel="stylesheet"
     />
 
-    <!-- Scripts -->
+    <!-- Vite Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
   </head>
 
