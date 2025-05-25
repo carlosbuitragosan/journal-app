@@ -79,4 +79,5 @@ jobs:
             postcss.config.js
             .prettierrc*
             .php-cs-fixer.*
-          state-name: backend-files
+            README.md
+          state-name: backend-files-v2
