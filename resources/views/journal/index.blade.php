@@ -74,7 +74,9 @@
           <p class="text-sm text-gray-400">
             {{ $entry->created_at->diffForHumans() }}
           </p>
-          <p class="mt-2 text-gray-200">{{ $entry->body }}</p>
+          <p class="mt-2 text-gray-200 break-words">
+            {{ $entry->body }}
+          </p>
 
           <!-- Actions -->
           <div class="mt-4 flex gap-4">
