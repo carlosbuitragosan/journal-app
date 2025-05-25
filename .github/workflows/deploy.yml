@@ -50,7 +50,8 @@ jobs:
           local-dir: ./
           server-dir: ./
           exclude: |
-            .git*
+            .git/
+            .gitignore
             .github/
             node_modules/
             vendor/
