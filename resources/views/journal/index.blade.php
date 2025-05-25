@@ -74,9 +74,40 @@
           <p class="text-sm text-gray-400">
             {{ $entry->created_at->diffForHumans() }}
           </p>
-          <p class="mt-2 text-gray-200 break-words">
-            {{ $entry->body }}
-          </p>
+          <div
+            x-data="{
+              expanded: false,
+              isClamped: false,
+              checkClamped() {
+                const el = this.$refs.entryText
+                if (! el) return
+                this.isClamped = el.scrollHeight > el.clientHeight
+              },
+            }"
+            x-init="
+              $nextTick(() => {
+                checkClamped()
+                window.addEventListener('resize', () => checkClamped())
+              })
+            "
+            class="mt-2"
+          >
+            <p
+              x-ref="entryText"
+              :class="expanded ? 'text-gray-200 break-words' : 'text-gray-200 break-words line-clamp-4'"
+              class="transition-all"
+            >
+              {{ $entry->body }}
+            </p>
+            <button
+              x-show="isClamped"
+              @click="expanded = !expanded"
+              class="mt-2 text-sm text-indigo-400 hover:underline focus:outline-none"
+            >
+              <span x-show="!expanded">Show more</span>
+              <span x-show="expanded">Show less</span>
+            </button>
+          </div>
 
           <!-- Actions -->
           <div class="mt-4 flex gap-4">
