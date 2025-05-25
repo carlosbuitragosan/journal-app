@@ -17,6 +17,7 @@
     />
     <link
       rel="apple-touch-icon"
+      sizes="180x180"
       href="{{ asset('apple-favicon.png') }}"
     />
 
