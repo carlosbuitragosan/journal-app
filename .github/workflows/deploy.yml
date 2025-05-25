@@ -24,6 +24,12 @@ jobs:
           local-dir: public/build/
           server-dir: build/
           state-name: vite-build
+          exclude: |
+            .git*
+            .github/
+            .gitattributes
+            .editorconfig
+            README.md
 
       # Step 2: Upload other public/ files (excluding build/)
       - name: Upload Laravel public files
@@ -38,9 +44,14 @@ jobs:
             build/
             .htaccess
             index.php
+            .git*
+            .github/
+            .gitattributes
+            .editorconfig
+            README.md
           state-name: public-files
 
-      # Step 3: Upload Laravel core app (excluding public, vendor, node_modules, etc.)
+      # Step 3: Upload Laravel backend files (excluding unwanted files/folders)
       - name: Upload Laravel backend files
         uses: carlosbuitragosan/ftp-deploy-action@master
         with:
@@ -52,6 +63,9 @@ jobs:
           exclude: |
             .git/
             .gitignore
+            .gitattributes
+            .editorconfig
+            README.md
             .github/
             node_modules/
             vendor/
