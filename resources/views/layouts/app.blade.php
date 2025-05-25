@@ -15,6 +15,10 @@
       href="{{ url('favicon.png') }}"
       type="image/png"
     />
+    <link
+      rel="apple-touch-icon"
+      href="{{ asset('apple-favicon.png') }}"
+    />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net" />
