@@ -5,11 +5,10 @@
     </h2>
   </x-slot>
 
-  <div class="p-6 text-gray-200">
+  <div class="px-1 sm:px-4 md:px-6 lg:px-8 py-6 text-gray-200">
     <div
       id="calendar"
-      class="bg-gray-900 text-white rounded shadow p-4"
-      {{-- style="height: 600px" --}}
+      class="bg-gray-900 text-white rounded shadow p-4 max-w-4xl mx-auto"
     ></div>
   </div>
   @push('styles')
@@ -37,7 +36,7 @@
         const calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth',
           height: 'auto',
-          events: '/api/journal-entries',
+          events: {{ url('/api/journal-entries') }},
         });
 
         calendar.render();
