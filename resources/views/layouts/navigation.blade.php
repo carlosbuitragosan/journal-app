@@ -24,6 +24,13 @@
           >
             {{ __('Journal') }}
           </x-nav-link>
+          `
+          <x-nav-link
+            :href="route('calendar')"
+            :active="request()->routeIs('calendar')"
+          >
+            {{ __('Calendar') }}
+          </x-nav-link>
         </div>
       </div>
 
@@ -116,6 +123,12 @@
         :active="request()->is('journal')"
       >
         {{ __('Journal') }}
+      </x-responsive-nav-link>
+      <x-responsive-nav-link
+        :href="route('calendar')"
+        :active="request()->routeIs('calendar')"
+      >
+        {{ __('Calendar') }}
       </x-responsive-nav-link>
     </div>
 

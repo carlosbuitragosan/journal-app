@@ -1,7 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Models\JournalEntry;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\JournalController;
 
 Route::get('/', function () {
   return Auth::check() ? redirect('/journal') : view('welcome');
@@ -12,54 +16,18 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+  // Profile
   Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
   Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
   Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+  // Journal
+  Route::get('/journal', [JournalController::class, 'index'])->name('journal.index');
+  Route::post('journal', [JournalController::class, 'store'])->name('journal.store');
+  Route::patch('/journal/{entry}', [JournalController::class, 'update'])->name('journal.update');
+  Route::delete('/journal/{entry}', [JournalController::class, 'destroy'])->name('journal.destroy');
+  // Calendar
+  Route::get('/calendar', [JournalController::class, 'calendar'])->name('calendar');
+  Route::get('/api/journal-entries', [JournalController::class, 'entriesJson'])->name('journal.entries.json');
 });
-
-use App\Models\JournalEntry;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-
-Route::post('/journal', function (Request $request) {
-  $request->validate([
-      'title' => 'nullable',
-      'body' => 'required',
-  ]);
-  JournalEntry::create([
-      'user_id' => Auth::id(),
-      'title' => $request->input('title'),
-      'body' => $request->input('body'),
-  ]);
-  return redirect('/journal');
-})->middleware('auth');
-
-Route::get('/journal', function () {
-  $entries = \App\Models\JournalEntry::where('user_id', Auth::id())
-      ->latest()
-      ->get();
-  return view('journal.index', ['entries' => $entries]);
-})->middleware('auth');
-
-Route::delete('/journal/{entry}', function (\App\Models\JournalEntry $entry) {
-  if ($entry->user_id !== \Illuminate\Support\Facades\Auth::id()) {
-    abort(403);
-  }
-
-  $entry->delete();
-  return redirect('/journal');
-})->middleware('auth');
-
-Route::patch('/journal/{entry}', function (JournalEntry $entry, Request $request) {
-  abort_unless(Auth::id() === $entry->user_id, 403);
-
-  $validated = $request->validate([
-      'title' => 'nullable|string',
-      'body' => 'required|string',
-  ]);
-
-  $entry->update($validated);
-  return redirect('/journal');
-})->middleware('auth');
 
 require __DIR__ . '/auth.php';
