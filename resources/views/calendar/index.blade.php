@@ -5,11 +5,13 @@
     </h2>
   </x-slot>
 
-  <div class="px-1 sm:px-4 md:px-6 lg:px-8 py-6 text-gray-200">
-    <div
-      id="calendar"
-      class="bg-gray-900 text-white rounded shadow p-4 max-w-4xl mx-auto"
-    ></div>
+  <div class="px-4 sm:p-6 text-gray-200">
+    <div class="overflow-x-auto">
+      <div
+        id="calendar"
+        class="bg-gray-900 text-white rounded shadow p-4 min-w-[700px]"
+      ></div>
+    </div>
   </div>
   @push('styles')
     <link
@@ -19,6 +21,14 @@
     <style>
       .fc-col-header {
         background: #4f46e5;
+      }
+      @media (max-width: 640px) {
+        .fc-header-toolbar {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          align-items: flex-start !important;
+        }
       }
     </style>
   @endpush
