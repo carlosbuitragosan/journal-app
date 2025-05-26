@@ -43,7 +43,7 @@ class JournalController extends Controller
 
     $entry->update($validated);
 
-    return redirect()->route('journal.index');
+    return redirect()->back();
   }
 
   public function destroy(JournalEntry $entry)
@@ -52,7 +52,7 @@ class JournalController extends Controller
 
     $entry->delete();
 
-    return redirect()->route('journal.index');
+    return redirect()->back();
   }
 
   public function calendar()
