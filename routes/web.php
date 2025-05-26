@@ -28,6 +28,10 @@ Route::middleware('auth')->group(function () {
   // Calendar
   Route::get('/calendar', [JournalController::class, 'calendar'])->name('calendar');
   Route::get('/api/journal-entries', [JournalController::class, 'entriesJson'])->name('journal.entries.json');
+  Route::get('/api/journal-entry/{entry}', function (App\Models\JournalEntry $entry) {
+    abort_unless(Auth::id() === $entry->user_id, 403);
+    return response()->json($entry);
+  })->middleware('auth');
 });
 
 require __DIR__ . '/auth.php';

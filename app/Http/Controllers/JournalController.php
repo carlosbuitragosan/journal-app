@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\Models\JournalEntry;
 
 class JournalController extends Controller
@@ -64,11 +65,11 @@ class JournalController extends Controller
     $entries = JournalEntry::where('user_id', Auth::id())
         ->get()
         ->map(function ($entry) {
-          $title = $entry->title ?: \Illuminate\Support\Str::limit($entry->body, 30);
           return [
-              'title' => $title,
+              'id' => $entry->id,
+              'title' => $entry->title ?: Str::limit($entry->body, 30),
               'start' => $entry->created_at->toDateString(),
-              'url' => route('journal.index'),
+              'url' => '',
           ];
         });
 
