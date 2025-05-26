@@ -198,7 +198,9 @@
           height: 'auto',
           events: @json(route('journal.entries.json')),
           eventClick: function (info) {
-            fetch(`/api/journal-entry/${info.event.id}`)
+            fetch(
+              `{{ url('/api/journal-entry/') }}/${info.event.id}`,
+            )
               .then((res) => res.json())
               .then((entry) => {
                 window.dispatchEvent(
