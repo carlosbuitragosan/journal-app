@@ -36,7 +36,7 @@
         const calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth',
           height: 'auto',
-          events: {{ url('/api/journal-entries') }},
+          events: @json(route('journal.entries.json')),
         });
 
         calendar.render();
