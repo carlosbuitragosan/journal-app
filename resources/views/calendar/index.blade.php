@@ -63,7 +63,7 @@
           <!-- Edit Mode -->
           <template x-if="isEditing">
             <form
-              :action="`/journal/${entry.id}`"
+              :action="`{{ url('journal') }}/${entry.id}`"
               method="POST"
               class="space-y-4"
             >
@@ -112,7 +112,7 @@
           <!-- Delete Confirmation -->
           <template x-if="confirmingDelete">
             <form
-              :action="`/journal/${entry.id}`"
+              :action="`{{ url('journal') }}/${entry.id}`"
               method="POST"
               class="space-y-4"
             >
@@ -152,7 +152,12 @@
       .fc-col-header {
         background: #4f46e5;
       }
+
       @media (max-width: 640px) {
+        #calendar {
+          min-width: 900px;
+        }
+
         .fc-header-toolbar {
           display: flex;
           flex-direction: column;
@@ -160,6 +165,7 @@
           align-items: flex-start !important;
         }
       }
+
       .fc-event {
         cursor: pointer;
       }
