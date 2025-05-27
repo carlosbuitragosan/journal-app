@@ -22,7 +22,7 @@
         class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
       >
         <div
-          class="bg-white dark:bg-gray-800 p-6 rounded shadow-lg max-w-lg w-full space-y-4 max-h-[90vh] overflow-y-auto"
+          class="bg-white dark:bg-gray-800 p-6 rounded shadow-lg w-full max-w-[90vw] sm:max-w-lg space-y-4 max-h-[90vh] overflow-y-auto"
         >
           <!-- View Mode -->
           <template x-if="!isEditing && !confirmingDelete">
@@ -175,9 +175,6 @@
   @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
     <script>
-      document.addEventListener('alpine:initialized', () => {
-        console.log('Alpine is fully initialized');
-      });
       document.addEventListener('alpine:init', () => {
         Alpine.data('calendarModal', () => ({
           showModal: false,
