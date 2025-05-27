@@ -22,7 +22,7 @@
         class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
       >
         <div
-          class="bg-white dark:bg-gray-800 p-6 rounded shadow-lg max-w-lg w-full space-y-4"
+          class="bg-white dark:bg-gray-800 p-6 rounded shadow-lg max-w-lg w-full space-y-4 max-h-[90vh] overflow-y-auto"
         >
           <!-- View Mode -->
           <template x-if="!isEditing && !confirmingDelete">
