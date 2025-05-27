@@ -1,10 +1,4 @@
 <x-app-layout>
-  <x-slot name="header">
-    <h2 class="text-xl font-semibold leading-tight text-white">
-      Your Journal Entries
-    </h2>
-  </x-slot>
-
   <div class="p-6 text-gray-200 space-y-6">
     <!-- Entry Form -->
     <form

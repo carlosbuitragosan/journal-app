@@ -1,10 +1,4 @@
 <x-app-layout>
-  <x-slot name="header">
-    <h2 class="text-xl font-semibold leading-tight text-white">
-      Calendar
-    </h2>
-  </x-slot>
-
   <div class="px-4 sm:p-6 text-gray-200">
     <div class="overflow-x-auto">
       <div
