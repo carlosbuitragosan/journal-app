@@ -22,7 +22,7 @@
         class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
       >
         <div
-          class="bg-white dark:bg-gray-800 p-6 rounded shadow-lg w-full max-w-[90vw] sm:max-w-lg space-y-4 max-h-[90vh] overflow-y-auto"
+          class="bg-white dark:bg-gray-800 p-6 rounded shadow-lg w-full sm:max-w-lg space-y-4 max-h-[90vh] overflow-y-auto"
         >
           <!-- View Mode -->
           <template x-if="!isEditing && !confirmingDelete">
@@ -33,7 +33,7 @@
               ></h2>
               <p
                 x-text="entry.body"
-                class="text-gray-600 dark:text-gray-300 whitespace-pre-line mb-6"
+                class="text-gray-600 dark:text-gray-300 whitespace-pre-line break-words mb-6"
               ></p>
               <div class="flex justify-between gap-2">
                 <div class="flex gap-2">
@@ -52,7 +52,7 @@
                 </div>
                 <button
                   @click="close()"
-                  class="text-sm text-gray-600 hover:underline"
+                  class="text-sm text-gray-300 hover:underline"
                 >
                   Close
                 </button>
