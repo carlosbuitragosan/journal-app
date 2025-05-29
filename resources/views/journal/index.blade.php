@@ -1,73 +1,96 @@
-<x-app-layout>
-  <div class="p-6 text-gray-200 space-y-6">
-    <!-- Entry Form -->
-    <form
-      method="POST"
-      action="{{ url('/journal') }}"
-      class="space-y-4 mb-6"
-    >
-      @csrf
-      <div>
-        <label
-          for="title"
-          class="block text-sm font-medium text-gray-200"
-        >
-          Title
-        </label>
+<div
+  x-data="{
+    searchQuery: '',
+    openModal: null,
+    editModalId: null,
+    editForm: { title: '', body: '' },
+  }"
+>
+  <x-app-layout>
+    <x-slot name="header">
+      <div
+        class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2"
+      >
         <input
           type="text"
-          name="title"
-          id="title"
-          class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          placeholder="Search your entries..."
+          class="rounded-md border-gray-600 bg-gray-900 text-white shadow-sm text-sm px-3 py-1 w-full sm:w-64"
+          x-model="searchQuery"
+          aria-label="Search journal entries"
+          data-testid="search-input"
         />
       </div>
-      <div>
-        <label
-          for="body"
-          class="block text-sm font-medium text-gray-200"
-        >
-          Entry
-        </label>
-        <textarea
-          name="body"
-          id="body"
-          rows="5"
-          class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm sm:text-sm"
-          required
-        ></textarea>
-      </div>
-      <div>
-        <button
-          type="submit"
-          class="inline-flex items-center px-4 py-2 bg-indigo-600 rounded-md font-semibold text-white hover:bg-indigo-700"
-        >
-          Save Entry
-        </button>
-      </div>
-    </form>
+    </x-slot>
 
-    <!-- Journal Entries -->
-    <div
-      x-data="{
-        openModal: null,
-        editModalId: null,
-        editForm: { title: '', body: '' },
-        init() {
-          this.editModalId = null
-        },
-      }"
-      class="space-y-6"
-    >
+    <div class="p-6 text-gray-200 space-y-6">
+      <!-- Entry Form -->
+      <form
+        method="POST"
+        action="{{ url('/journal') }}"
+        class="space-y-4 mb-6"
+      >
+        @csrf
+        <div>
+          <label
+            for="title"
+            class="block text-sm font-medium text-gray-200"
+          >
+            Title
+          </label>
+          <input
+            type="text"
+            name="title"
+            id="title"
+            class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm sm:text-sm"
+          />
+        </div>
+        <div>
+          <label
+            for="body"
+            class="block text-sm font-medium text-gray-200"
+          >
+            Entry
+          </label>
+          <textarea
+            name="body"
+            id="body"
+            rows="5"
+            class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm sm:text-sm"
+            required
+          ></textarea>
+        </div>
+        <div>
+          <button
+            type="submit"
+            class="inline-flex items-center px-4 py-2 bg-indigo-600 rounded-md font-semibold text-white hover:bg-indigo-700"
+          >
+            Save Entry
+          </button>
+        </div>
+      </form>
+
+      <!-- Journal Entries -->
       @forelse ($entries as $entry)
+        @php
+          $content = strtolower($entry->title . ' ' . $entry->body);
+        @endphp
+
         <div
+          x-show="
+            ! searchQuery ||
+              '{{ strtolower(($entry->title ?? '') . ' ' . ($entry->body ?? '')) }}'.includes(
+                searchQuery.toLowerCase(),
+              )
+          "
           class="border border-gray-600 p-4 rounded relative bg-gray-900"
         >
           <h3 class="text-lg font-bold text-white">
-            {{ $entry->title }}
+            {{ $entry->title ?? '' }}
           </h3>
           <p class="text-sm text-gray-400">
             {{ $entry->created_at->diffForHumans() }}
           </p>
+
           <div
             x-data="{
               expanded: false,
@@ -81,7 +104,7 @@
             x-init="
               $nextTick(() => {
                 checkClamped()
-                window.addEventListener('resize', () => checkClamped())
+                window.addEventListener('resize', checkClamped)
               })
             "
             class="mt-2"
@@ -123,7 +146,7 @@
             </button>
           </div>
 
-          <!-- Confirmation Modal -->
+          <!-- Delete Modal -->
           <div
             x-show="openModal === {{ $entry->id }}"
             x-transition
@@ -168,73 +191,79 @@
               </div>
             </div>
           </div>
+
+          <!-- Edit Modal -->
+          <div
+            x-show="editModalId === {{ $entry->id }}"
+            x-transition
+            x-cloak
+            class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+          >
+            <div
+              class="bg-white dark:bg-gray-800 p-6 rounded shadow-lg max-w-lg w-full"
+            >
+              <h2
+                class="text-lg font-bold mb-4 text-gray-800 dark:text-white"
+              >
+                Edit Entry
+              </h2>
+              <form
+                :action="`{{ url('/journal') }}/${editModalId}`"
+                method="POST"
+                class="space-y-4"
+              >
+                @csrf
+                @method('PATCH')
+                <div>
+                  <label
+                    class="block text-sm font-medium text-gray-200"
+                  >
+                    Title
+                  </label>
+                  <input
+                    type="text"
+                    name="title"
+                    x-model="editForm.title"
+                    class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white sm:text-sm"
+                  />
+                </div>
+                <div>
+                  <label
+                    class="block text-sm font-medium text-gray-200"
+                  >
+                    Body
+                  </label>
+                  <textarea
+                    name="body"
+                    x-model="editForm.body"
+                    rows="4"
+                    class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white sm:text-sm"
+                  ></textarea>
+                </div>
+                <div class="flex justify-end gap-2">
+                  <button
+                    type="button"
+                    @click="editModalId = null"
+                    class="px-3 py-1 bg-gray-300 hover:bg-gray-400 rounded text-gray-800"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 rounded text-white"
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       @empty
-        <p class="text-gray-400">You have no journal entries yet.</p>
+        <p class="text-gray-400" data-testid="empty-state">
+          You have no journal entries yet.
+        </p>
       @endforelse
-
-      <!-- Edit Entry Modal -->
-      <div
-        x-show="editModalId"
-        x-transition
-        x-cloak
-        class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-      >
-        <div
-          class="bg-white dark:bg-gray-800 p-6 rounded shadow-lg max-w-lg w-full"
-        >
-          <h2
-            class="text-lg font-bold mb-4 text-gray-800 dark:text-white"
-          >
-            Edit Entry
-          </h2>
-          <form
-            :action="`{{ url('/journal') }}/${editModalId}`"
-            method="POST"
-            class="space-y-4"
-          >
-            @csrf
-            @method('PATCH')
-            <div>
-              <label class="block text-sm font-medium text-gray-200">
-                Title
-              </label>
-              <input
-                type="text"
-                name="title"
-                x-model="editForm.title"
-                class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white sm:text-sm"
-              />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-200">
-                Body
-              </label>
-              <textarea
-                name="body"
-                x-model="editForm.body"
-                rows="4"
-                class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white sm:text-sm"
-              ></textarea>
-            </div>
-            <div class="flex justify-end gap-2">
-              <button
-                type="button"
-                @click="editModalId = null"
-                class="px-3 py-1 bg-gray-300 hover:bg-gray-400 rounded text-gray-800"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 rounded text-white"
-              >
-                Save Changes
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
-</x-app-layout>
+  </x-app-layout>
+</div>
