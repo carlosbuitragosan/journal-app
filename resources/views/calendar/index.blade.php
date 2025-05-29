@@ -95,7 +95,7 @@
                 </button>
                 <button
                   type="submit"
-                  class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 rounded text-white"
+                  class="text-indigo-600 hover:underline"
                 >
                   Save Changes
                 </button>
