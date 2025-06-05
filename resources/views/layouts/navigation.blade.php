@@ -24,7 +24,7 @@
           >
             {{ __('Journal') }}
           </x-nav-link>
-          `
+
           <x-nav-link
             :href="route('calendar')"
             :active="request()->routeIs('calendar')"
