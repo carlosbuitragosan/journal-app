@@ -15,7 +15,7 @@ Route::get('/dashboard', function () {
   return redirect('/journal');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
   // Profile
   Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
   Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -33,5 +33,23 @@ Route::middleware('auth')->group(function () {
     return response()->json($entry);
   })->middleware('auth');
 });
+
+// Debug routes
+Route::get('/test-protected', function () {
+  return 'You are verified!';
+})->middleware(['auth', 'verified']);
+
+Route::get('/verify-check', function () {
+  $user = Auth::user();
+
+  return [
+      'email_verified_at' => $user->email_verified_at,
+      'hasVerifiedEmail()' => $user->hasVerifiedEmail(),
+  ];
+})->middleware(['auth', 'verified']);
+
+Route::get('/only-verified', function () {
+  return '✅ You got through verified!';
+})->middleware('verified');
 
 require __DIR__ . '/auth.php';
