@@ -1,4 +1,10 @@
 <x-guest-layout>
+  <h1
+    class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-8"
+  >
+    Reflekt
+  </h1>
+
   <form method="POST" action="{{ url('/register') }}">
     @csrf
 
