@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Models\JournalEntry;
 use App\Http\Controllers\ProfileController;
@@ -51,5 +52,14 @@ Route::get('/verify-check', function () {
 Route::get('/only-verified', function () {
   return '✅ You got through verified!';
 })->middleware('verified');
+
+Route::get('/test-email', function () {
+  Mail::raw('This is a test email from Reflekt via Postmark.', function ($message) {
+    $message->to('info@carlosbuitrago.me') // 👈 Replace with your real email address
+            ->subject('Reflekt Email Test');
+  });
+
+  return '✅ Email sent! Check your inbox.';
+});
 
 require __DIR__ . '/auth.php';
