@@ -59,7 +59,7 @@ Route::get('/test-email', function () {
             ->subject('Reflekt Email Test');
   });
 
-  return '✅ Email sent! Check your inbox.';
+  return 'Email sent! Check your inbox.';
 });
 
 require __DIR__ . '/auth.php';
