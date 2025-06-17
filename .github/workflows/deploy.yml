@@ -26,7 +26,6 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: public/build/
           server-dir: build/
-          state-name: vite-build
           exclude: |
             .git*
             .github/
@@ -52,7 +51,6 @@ jobs:
             .gitattributes
             .editorconfig
             README.md
-          state-name: public-files
 
       # Step 3: Upload Laravel backend files (excluding unwanted files/folders)
       - name: Upload Laravel backend files
@@ -83,4 +81,3 @@ jobs:
             .prettierrc*
             .php-cs-fixer.*
             README.md
-          state-name: backend-files-v3
