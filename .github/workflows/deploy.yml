@@ -63,13 +63,17 @@ jobs:
           server-dir: ./
           exclude: |
             .git/
+            .git/*
             .gitignore
             .gitattributes
             .editorconfig
             README.md
             .github/
+            .github/*
             node_modules/
             vendor/
+            vendor/*
+            .vendor/**
             tests/
             .env
             .env.example
@@ -81,3 +85,4 @@ jobs:
             .prettierrc*
             .php-cs-fixer.*
             README.md
+          log-level: verbose

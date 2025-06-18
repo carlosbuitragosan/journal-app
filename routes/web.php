@@ -55,7 +55,7 @@ Route::get('/only-verified', function () {
 
 Route::get('/test-email', function () {
   Mail::raw('This is a test email from Reflekt via Postmark.', function ($message) {
-    $message->to('c.buitragosan@gmail.com') // 👈 Replace with your real email address
+    $message->to('info@carlosbuitrago.me') // 👈 Replace with your real email address
             ->subject('Reflekt Email Test');
   });
 
