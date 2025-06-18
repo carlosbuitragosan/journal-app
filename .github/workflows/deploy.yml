@@ -17,23 +17,21 @@ jobs:
       - name: Remove .git folder
         run: rm -rf .git
 
-      # Step 1: Upload public/ folder
-      - name: Upload Laravel public files
+      # Step 1: Upload public/ contents into the root of /reflekt
+      - name: Upload Laravel public folder
         uses: carlosbuitragosan/ftp-deploy-action@master
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: public/
-          server-dir: public/
+          server-dir: ./
           state-name: reflect-public
           exclude: |
-            .ftp-deploy-sync-state*
-            .git/
+            .git*
             .github/
-            .gitattributes
-            .editorconfig
             README.md
+            .editorconfig
 
       # Step 2: Upload Laravel backend files (excluding unwanted files/folders)
       - name: Upload Laravel backend files
