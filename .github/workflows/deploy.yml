@@ -7,17 +7,14 @@ on:
 
 jobs:
   ftp-deploy:
-    name: Upload via FTP
+    name: Upload Laravel App via FTP
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Remove .git folder
-        run: rm -rf .git
-
-      # Step 1: Upload public/ contents into the root of /reflekt
+      # Upload public/ contents into the root of reflect subdomain directory
       - name: Upload Laravel public folder
         uses: carlosbuitragosan/ftp-deploy-action@master
         with:
@@ -33,7 +30,7 @@ jobs:
             README.md
             .editorconfig
 
-      # Step 2: Upload Laravel backend files (excluding unwanted files/folders)
+      # Upload Laravel backend (excluding sensitive/dev files)
       - name: Upload Laravel backend files
         uses: carlosbuitragosan/ftp-deploy-action@master
         with:
@@ -47,17 +44,15 @@ jobs:
             .ftp-deploy-sync-state*
             .git/
             .github/
-            .gitignore
             .gitattributes
             .editorconfig
+            .gitignore
             README.md
             node_modules/
             vendor/
-            vendor/*
-            vendor/**
             tests/
             .env
-            .env.example
+            .env.*
             public/
             package*.json
             vite.config.js
