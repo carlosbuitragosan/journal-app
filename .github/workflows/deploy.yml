@@ -14,9 +14,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Install Composer dependencies
-        run: composer install --no-dev --optimize-autoloader
-
       # Step 1: Upload public/ folder
       - name: Upload Laravel public files
         uses: carlosbuitragosan/ftp-deploy-action@master
@@ -56,7 +53,8 @@ jobs:
             node_modules/
             vendor/
             vendor/*
-            .vendor/**
+            vendor/**
+
             tests/
             .env
             .env.example
